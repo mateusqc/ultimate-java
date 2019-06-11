@@ -22,17 +22,17 @@ public class GuildVendor extends BaseVendor {
             case ASK_BUY:
                 displayToScreen(String.format(welcomeMessage, vendor.getName()));
                 displayToScreen(String.format("Shure ye wishes to buy from ol' %s?", vendor.getOwner()));
-                displayToScreen(String.format("Welcome to %s.\nLike to see my goods?", vendor.getName()));
+                displayToScreen(String.format("Welcome to %s.%nLike to see my goods?", vendor.getName()));
                 break;
 
             case WAIT_BUY_INPUT:
-                displayToScreen(String.format("%s says: Good Mate! Ya see I gots:\n", vendor.getOwner()));
+                displayToScreen(String.format("%s says: Good Mate! Ya see I gots:%n", vendor.getOwner()));
 
                 String list = "";
                 for (Item i : vendor.getInventoryItems()) {
                     if (i.getGuildItemType() != GuildItemType.sextant) //sextant is hidden
                     {
-                        list += String.format("%s - %s (%s) for %sgp\n", i.getChoice().toUpperCase(), i.getName(), i.getQuantity(), i.getPrice());
+                        list += String.format("%s - %s (%s) for %sgp%n", i.getChoice().toUpperCase(), i.getName(), i.getQuantity(), i.getPrice());
                     }
                 }
                 list += "Wat'l it be?";

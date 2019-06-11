@@ -89,16 +89,16 @@ public class Person implements Constants {
 
     public String toTMXString() {
 
-        String template = "<object name=\"%s\" type=\"%s\" x=\"%s\" y=\"%s\" width=\"32\" height=\"32\">\n"
-                + "<properties>\n"
-                + "<property name=\"id\" value=\"%s\"/>\n"
-                + "<property name=\"tileType\" value=\"%s\"/>\n"
-                + "<property name=\"movement\" value=\"%s\"/>\n"
-                + "<property name=\"startX\" value=\"%s\"/>\n"
-                + "<property name=\"startY\" value=\"%s\"/>\n"
-                + "<property name=\"dialogId\" value=\"%s\"/>\n"
-                + "</properties>\n"
-                + "</object>\n";
+        String template = "<object name=\"%s\" type=\"%s\" x=\"%s\" y=\"%s\" width=\"32\" height=\"32\">%n"
+                + "<properties>%n"
+                + "<property name=\"id\" value=\"%s\"/>%n"
+                + "<property name=\"tileType\" value=\"%s\"/>%n"
+                + "<property name=\"movement\" value=\"%s\"/>%n"
+                + "<property name=\"startX\" value=\"%s\"/>%n"
+                + "<property name=\"startY\" value=\"%s\"/>%n"
+                + "<property name=\"dialogId\" value=\"%s\"/>%n"
+                + "</properties>%n"
+                + "</object>%n";
 
         String name = (conversation != null ? conversation.getName() : "anonymous");
 
@@ -108,23 +108,23 @@ public class Person implements Constants {
 
     public String toTMXString48() {
 
-        String template = "<object id=\"%s\" name=\"%s\" type=\"%s\" x=\"%s\" y=\"%s\" width=\"48\" height=\"48\">\n"
-                + "<properties>\n"
-                + "<property name=\"movement\" value=\"%s\"/>\n"
-                + "<property name=\"tileType\" value=\"%s\"/>\n"
-                + "</properties>\n"
-                + "</object>\n";
+        String template = "<object id=\"%s\" name=\"%s\" type=\"%s\" x=\"%s\" y=\"%s\" width=\"48\" height=\"48\">%n"
+                + "<properties>%n"
+                + "<property name=\"movement\" value=\"%s\"/>%n"
+                + "<property name=\"tileType\" value=\"%s\"/>%n"
+                + "</properties>%n"
+                + "</object>%n";
 
         if (this.vendor != null) {
 
-            template = "<object id=\"%s\" name=\"%s\" type=\"%s\" x=\"%s\" y=\"%s\" width=\"48\" height=\"48\">\n"
-                    + "<properties>\n"
-                    + "<property name=\"movement\" value=\"%s\"/>\n"
-                    + "<property name=\"inventoryType\" value=\"%s\"/>\n"
-                    + "<property name=\"vendorName\" value=\"%s\"/>\n"
-                    + "<property name=\"tileType\" value=\"%s\"/>\n"
-                    + "</properties>\n"
-                    + "</object>\n";
+            template = "<object id=\"%s\" name=\"%s\" type=\"%s\" x=\"%s\" y=\"%s\" width=\"48\" height=\"48\">%n"
+                    + "<properties>%n"
+                    + "<property name=\"movement\" value=\"%s\"/>%n"
+                    + "<property name=\"inventoryType\" value=\"%s\"/>%n"
+                    + "<property name=\"vendorName\" value=\"%s\"/>%n"
+                    + "<property name=\"tileType\" value=\"%s\"/>%n"
+                    + "</properties>%n"
+                    + "</object>%n";
 
         }
 

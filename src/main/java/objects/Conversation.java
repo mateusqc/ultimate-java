@@ -138,9 +138,9 @@ public class Conversation {
     }
 
     public String toXMLString(Maps m) {
-        String format = "    <conversation map=\"%s\" name=\"%s\" pronoun=\"%s\" description=\"%s\">\n"
+        String format = "    <conversation map=\"%s\" name=\"%s\" pronoun=\"%s\" description=\"%s\">%n"
                 + "%s"
-                + "    </conversation>\n";
+                + "    </conversation>%n";
 
         StringBuilder topicsXML = new StringBuilder();
         for (Topic t : topics) {
@@ -154,9 +154,9 @@ public class Conversation {
     }
 
     public String toXMLString2(Maps m) {
-        String format = "<conversation map=\"%s\" name=\"%s\" description=\"%s\">\n"
+        String format = "<conversation map=\"%s\" name=\"%s\" description=\"%s\">%n"
                 + "%s"
-                + "</conversation>\n";
+                + "</conversation>%n";
 
         StringBuilder topicsXML = new StringBuilder();
         for (Topic t : topics) {
@@ -171,7 +171,7 @@ public class Conversation {
 
     @Override
     public String toString() {
-        return String.format("\n\tConversation [index=%s, name=%s, pronoun=%s, turnAwayProb=%s, description=%s, respAffectsHumility=%s, topics=%s]",
+        return String.format("%n\tConversation [index=%s, name=%s, pronoun=%s, turnAwayProb=%s, description=%s, respAffectsHumility=%s, topics=%s]",
                 index, name, pronoun, turnAwayProb, description, respAffectsHumility, topics);
     }
 
@@ -258,21 +258,21 @@ public class Conversation {
         }
 
         public String toXMLString() {
-            String format = "        <topic query=\"%s\"\n"
-                    + "               phrase=\"%s\" \n"
-                    + "               question=\"%s\"\n"
-                    + "               no=\"%s\"\n"
-                    + "               yes=\"%s\" />\n";
+            String format = "        <topic query=\"%s\"%n"
+                    + "               phrase=\"%s\" %n"
+                    + "               question=\"%s\"%n"
+                    + "               no=\"%s\"%n"
+                    + "               yes=\"%s\" />%n";
 
             return String.format(format, query, phrase, question == null ? "" : question, yesResponse == null ? "" : yesResponse, noResponse == null ? "" : noResponse).replace("&", "and");
         }
 
         public String toXMLString2() {
 
-            String labelFormat = "<label id=\"0\" query=\"%s\">\n"
-                    + "<topic query=\"default\" phrase=\"%s\"/>\n"
-                    + "<topic query=\"y\" phrase=\"%s\"/>\n"
-                    + "</label>\n";
+            String labelFormat = "<label id=\"0\" query=\"%s\">%n"
+                    + "<topic query=\"default\" phrase=\"%s\"/>%n"
+                    + "<topic query=\"y\" phrase=\"%s\"/>%n"
+                    + "</label>%n";
 
             String format = "<topic query=\"%s\" phrase=\"%s %s\" />\n%s";
             
@@ -286,7 +286,7 @@ public class Conversation {
 
         @Override
         public String toString() {
-            return String.format("\n\t\tTopic %s [query=%s, phrase=%s, question=%s, yesResponse=%s, noResponse=%s]", name, query, phrase, question, yesResponse, noResponse, lbHeal);
+            return String.format("%n\t\tTopic %s [query=%s, phrase=%s, question=%s, yesResponse=%s, noResponse=%s]", name, query, phrase, question, yesResponse, noResponse, lbHeal);
         }
 
     }

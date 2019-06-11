@@ -37,7 +37,7 @@ public class CreatureSet {
             if (ct != null) {
                 ct.setCreature(cr);
             } else {
-                System.err.printf("CreatureSet.init: Could not find creature type with id %d\n", cr.getId());
+                System.err.printf("CreatureSet.init: Could not find creature type with id %d%n", cr.getId());
             }
         }
     }

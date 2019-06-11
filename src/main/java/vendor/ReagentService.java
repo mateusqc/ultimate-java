@@ -14,7 +14,7 @@ public class ReagentService extends BaseVendor {
 
     @Override
     public void init() {
-        welcomeMessage = "A blind woman turns to you\nand says: Welcome to %s,\nI am %s";
+        welcomeMessage = "A blind woman turns to you%nand says: Welcome to %s,%nI am %s";
         state = ConvState.ASK_BUY;
     }
 
@@ -29,21 +29,21 @@ public class ReagentService extends BaseVendor {
                 break;
 
             case WAIT_BUY_INPUT:
-                String list = "Very well.\nI Have:\n";
+                String list = "Very well.%nI Have:%n";
                 for (Item i : vendor.getInventoryItems()) {
-                    list += i.getChoice().toUpperCase() + " - " + i.getName() + "\n";
+                    list += i.getChoice().toUpperCase() + " - " + i.getName() + "%n";
                 }
                 list += "Your Interest?";
                 displayToScreen(list);
                 break;
 
             case WAIT_BUY_HOW_MANY:
-                String howmny = "Very well,\nI sell %s for %dgp.\nHow many would you like? (0-9)";
+                String howmny = "Very well,%nI sell %s for %dgp.%nHow many would you like? (0-9)";
                 displayToScreen(String.format(howmny, currentSelectedItem.getName(), currentSelectedItem.getPrice()));
                 break;
 
             case WAIT_YOU_PAY:
-                String willbe = "Very good, that will be %dgp.\nYou pay:";
+                String willbe = "Very good, that will be %dgp.%nYou pay:";
                 displayToScreen(String.format(willbe, currentSelectedItem.getPrice() * currentCount));
                 break;
 
@@ -67,7 +67,7 @@ public class ReagentService extends BaseVendor {
 
             case FAREWELL:
             default:
-                String bye = "%s says:\nPerhaps another time then....\nand slowly turns away.";
+                String bye = "%s says:%nPerhaps another time then....%nand slowly turns away.";
                 displayToScreen(String.format(bye, vendor.getOwner()));
                 return false;
         }

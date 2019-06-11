@@ -495,7 +495,7 @@ public class Utils implements Constants {
         }
 
         if ((combatMap.getId() == Maps.ABYSS.getId() && !wt.getWeapon().getMagic()) || !attackHit(attacker, creature)) {
-            Ultima4.hud.add("Missed!\n");
+            Ultima4.hud.add("Missed!%n");
             res = AttackResult.MISS;
         } else {
             Sounds.play(Sound.NPC_STRUCK);
@@ -524,12 +524,12 @@ public class Utils implements Constants {
         if (spell == Spell.SLEEP) {
             if (!"sleep".equals(creature.getResists())) {
                 Sounds.play(Sound.NPC_STRUCK);
-                Ultima4.hud.add("Slept!\n");
+                Ultima4.hud.add("Slept!%n");
                 creature.setStatus(StatusType.SLEEPING);
                 return AttackResult.HIT;
             } else {
                 Sounds.play(Sound.EVADE);
-                Ultima4.hud.add("Resisted!\n");
+                Ultima4.hud.add("Resisted!%n");
                 return AttackResult.MISS;
             }
         }
@@ -537,7 +537,7 @@ public class Utils implements Constants {
         if (spell == Spell.FIREBALL) {
             if ("fire".equals(creature.getResists())) {
                 Sounds.play(Sound.EVADE);
-                Ultima4.hud.add("Resisted!\n");
+                Ultima4.hud.add("Resisted!%n");
                 return AttackResult.MISS;
             }
         }
@@ -963,7 +963,7 @@ public class Utils implements Constants {
                 } else if (y > 2) {
                     if (bytes[pos] == 0x0 && stringIndex < 12) {
                         bb.flip();
-                        strings[stringIndex] = bb.toString().replace("\n", " ");
+                        strings[stringIndex] = bb.toString().replace("%n", " ");
                         stringIndex++;
                         bb.clear();
                     } else {
@@ -1100,7 +1100,7 @@ public class Utils implements Constants {
             if (ts != null) {
                 Tile t = ts.getTileByIndex(index);
                 if (t == null) {
-                    System.err.printf("tile index %s could not be found.\n", index);
+                    System.err.printf("tile index %s could not be found.%n", index);
                 }
                 p.setTile(t);
             }

@@ -4,7 +4,7 @@ import ultima.Context;
 
 public class WeaponVendor extends BaseVendor {
 
-    String welcomeMessage = "Welcome to %s\n%s says:\nWelcome friend!\nArt thou here to Buy or Sell?";
+    String welcomeMessage = "Welcome to %s%n%s says:%nWelcome friend!%nArt thou here to Buy or Sell?";
 
     public WeaponVendor(Vendor vendor, Context context) {
         super(vendor, context);
@@ -21,9 +21,9 @@ public class WeaponVendor extends BaseVendor {
                 displayToScreen(String.format(welcomeMessage, vendor.getName(), vendor.getOwner()));
                 break;
             case WAIT_BUY_INPUT:
-                String list = "Very Good!\nWe Have:\n";
+                String list = "Very Good!%nWe Have:%n";
                 for (Item i : vendor.getInventoryItems()) {
-                    list += i.getChoice().toUpperCase() + " - " + i.getName() + " for " + i.getPrice() + "gp.\n";
+                    list += i.getChoice().toUpperCase() + " - " + i.getName() + " for " + i.getPrice() + "gp.%n";
                 }
                 list += "Your Interest?";
                 displayToScreen(list);
@@ -45,11 +45,11 @@ public class WeaponVendor extends BaseVendor {
                 break;
 
             case WAIT_SELL_INPUT:
-                String sellList = "Excellent!\n";
+                String sellList = "Excellent!%n";
                 for (Item i : vendor.getVendorClass().getItemCatalog()) {
                     int c = party.getSaveGame().weapons[i.getWeaponType().ordinal()];
                     if (c > 0) {
-                        sellList += i.getChoice().toUpperCase() + " - " + i.getName() + " for " + i.getPrice() / 2 + "gp. (" + c + ")\n";
+                        sellList += i.getChoice().toUpperCase() + " - " + i.getName() + " for " + i.getPrice() / 2 + "gp. (" + c + ")%n";
                     } else {
                         continue;
                     }
