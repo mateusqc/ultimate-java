@@ -136,7 +136,7 @@ public class SpreadFOV implements FOVSolver {
             float distance = rStrat.radius(x, y, x2, y2);
             light -= decay * distance;
         } catch (Exception e) {
-            //none
+        	e.printStackTrace();
         }
         return light;
     }

@@ -349,7 +349,8 @@ public class DungeonScreen extends BaseScreen {
             }
 
             createMiniMap();
-
+        } catch (RuntimeException e) {
+        	e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
