@@ -805,6 +805,81 @@ public class CombatScreen extends BaseScreen {
         //not used here
     }
 
+    public void attackMethod(Creature creature, PartyMember target) throws PartyDeathException {
+   	 Sounds.play(Sound.NPC_ATTACK);
+
+        if (Utils.attackHit(creature, target) == AttackResult.HIT) {
+            Sounds.play(Sound.PC_STRUCK);
+            wounded = true;
+            
+            if (!Utils.dealDamage(creature, target)) {
+                target = null;
+            }
+
+            if (target != null) {
+                if (creature.stealsFood() && rand.nextInt(8) == 0) {
+                    Sounds.play(Sound.NEGATIVE_EFFECT);
+                    party.adjustFood(-(rand.nextInt(10)*1000));
+                }
+
+                if (creature.stealsGold() && rand.nextInt(8) == 0) {
+                    Sounds.play(Sound.NEGATIVE_EFFECT);
+                    party.adjustGold(-(rand.nextInt(40)));
+                }
+            }
+        }
+   }
+   
+   public void castSleepMethod(Creature creatur, PartyMember target) {
+   	if (context.getAura().getType() == AuraType.NEGATE) {
+           log("Sleep spell negated.");
+       } else {
+           log("Sleep!");
+           Sounds.play(Sound.SLEEP);
+           for (PartyMember p : party.getMembers()) {
+               if (rand.nextInt(2) == 0 && !p.isDisabled()) {
+                   p.putToSleep();
+               }
+           }
+       }
+   }
+   
+   public void teleportMethod(Creature creature, PartyMember target, CombatAction action) {
+   	boolean valid = false;
+       int rx=0, ry=0, count=0;
+       while (!valid && count < 5) {
+               rx = rand.nextInt(combatMap.getWidth());
+               ry = rand.nextInt(combatMap.getHeight());
+               Tile t = combatMap.getTile(rx, ry);
+               if (t != null) {
+                   valid = true;
+                   TileRule rule = t.getRule();
+                   if (rule != null && rule.has(TileAttrib.creatureunwalkable)) {
+                       valid = false;
+                   }
+               }
+               count++;
+	        }
+           if (valid) {
+               moveCreature(action, creature, rx, ry);
+           }
+   }
+   
+   public void rangedMethod(Creature creature, PartyMember target) throws PartyDeathException {
+   	// figure out which direction to fire the weapon
+       int dirmask = Utils.getRelativeDirection(MapBorderBehavior.fixed, combatMap.getWidth(), combatMap.getHeight(), target.combatCr.currentX, target.combatCr.currentY, creature.currentX, creature.currentY);
+
+       Sounds.play(Sound.NPC_ATTACK);
+       
+       List<AttackVector> path = Utils.getDirectionalActionPath(combatMap, dirmask, creature.currentX, creature.currentY, 1, 11, false, false, false);
+       for (AttackVector v : path) {
+           if (rangedAttackAt(v, creature)) {
+               break;
+           }
+       }
+
+   }
+    
     /**
      * Return false if to remove from map.
      */
@@ -858,81 +933,22 @@ public class CombatScreen extends BaseScreen {
 
         switch (action) {
             case ATTACK: {
-                Sounds.play(Sound.NPC_ATTACK);
-
-                if (Utils.attackHit(creature, target) == AttackResult.HIT) {
-                    Sounds.play(Sound.PC_STRUCK);
-                    wounded = true;
-                    
-                    if (!Utils.dealDamage(creature, target)) {
-                        target = null;
-                    }
-
-                    if (target != null) {
-                        if (creature.stealsFood() && rand.nextInt(8) == 0) {
-                            Sounds.play(Sound.NEGATIVE_EFFECT);
-                            party.adjustFood(-(rand.nextInt(10)*1000));
-                        }
-
-                        if (creature.stealsGold() && rand.nextInt(8) == 0) {
-                            Sounds.play(Sound.NEGATIVE_EFFECT);
-                            party.adjustGold(-(rand.nextInt(40)));
-                        }
-                    }
-                }
+                attackMethod(creature, target);
                 break;
             }
             case CAST_SLEEP: {
-                if (context.getAura().getType() == AuraType.NEGATE) {
-                    log("Sleep spell negated.");
-                } else {
-                    log("Sleep!");
-                    Sounds.play(Sound.SLEEP);
-                    for (PartyMember p : party.getMembers()) {
-                        if (rand.nextInt(2) == 0 && !p.isDisabled()) {
-                            p.putToSleep();
-                        }
-                    }
-                }
+                castSleepMethod(creature, target);
                 break;
             }
 
             case TELEPORT: {//only wisp teleports
-	        boolean valid = false;
-	        int rx=0, ry=0, count=0;
-	        while (!valid && count < 5) {
-                    rx = rand.nextInt(combatMap.getWidth());
-                    ry = rand.nextInt(combatMap.getHeight());
-                    Tile t = combatMap.getTile(rx, ry);
-                    if (t != null) {
-                        valid = true;
-                        TileRule rule = t.getRule();
-                        if (rule != null && rule.has(TileAttrib.creatureunwalkable)) {
-                            valid = false;
-                        }
-                    }
-                    count++;
- 	        }
-                if (valid) {
-                    moveCreature(action, creature, rx, ry);
-                }
+            teleportMethod(creature, target, action);
 	        break;
             }
 
             case RANGED: {
 
-                // figure out which direction to fire the weapon
-                int dirmask = Utils.getRelativeDirection(MapBorderBehavior.fixed, combatMap.getWidth(), combatMap.getHeight(), target.combatCr.currentX, target.combatCr.currentY, creature.currentX, creature.currentY);
-
-                Sounds.play(Sound.NPC_ATTACK);
-                
-                List<AttackVector> path = Utils.getDirectionalActionPath(combatMap, dirmask, creature.currentX, creature.currentY, 1, 11, false, false, false);
-                for (AttackVector v : path) {
-                    if (rangedAttackAt(v, creature)) {
-                        break;
-                    }
-                }
-
+                rangedMethod(creature, target);
                 break;
             }
 
