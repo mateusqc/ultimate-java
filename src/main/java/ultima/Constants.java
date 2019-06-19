@@ -396,10 +396,11 @@ public interface Constants {
         }
 
         public static int removeFromMask(int mask, Direction... dirs) {
+        	int aux_mask = mask;
             for (Direction dir : dirs) {
-                mask &= ~dir.getMask();
+                aux_mask &= ~dir.getMask();
             }
-            return mask;
+            return aux_mask;
         }
 
         public static Direction getRandomValidDirection(int mask) {
